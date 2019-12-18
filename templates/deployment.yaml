@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "catalog-server.fullname" . }}
+  name: {{ include "intake-server.fullname" . }}
   labels:
-    {{- include "catalog-server.labels" . | nindent 4 }}
+    {{- include "intake-server.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "catalog-server.selectorLabels" . | nindent 6 }}
+      {{- include "intake-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "catalog-server.selectorLabels" . | nindent 8 }}
+        {{- include "intake-server.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
         {{- if .Values.extraVolumes }}
@@ -24,7 +24,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.containers.env }}
           env:
-            {{- toYaml . | nindent 10 }}
+          - name: {{ .Values.serverEnvVars.catalogPath.name }}
+            value: {{ .Values.serverEnvVars.catalogPath.value }}
+          - name: {{ .Values.serverEnvVars.port.name }}
+            value: {{ .Values.serverEnvVars.port.value }}
           {{- end }}
           {{- with .Values.containers.volumeMounts }}
           volumeMounts:

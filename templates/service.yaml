@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "catalog-server.fullname" . }}
+  name: {{ include "intake-server.fullname" . }}
   labels:
-    {{- include "catalog-server.labels" . | nindent 4 }}
+    {{- include "intake-server.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       protocol: TCP
   selector:
-    {{- include "catalog-server.selectorLabels" . | nindent 4 }}
+    {{- include "intake-server.selectorLabels" . | nindent 4 }}

@@ -11,20 +11,25 @@ image:
   repository: dpeterk/intake-server
   pullPolicy: IfNotPresent
 
-containers:
-  env:
-  - name: INTAKE_PATH
-    value: ""
-  - name: INTAKE_PORT
-    value: ""
-  volumeMounts: []
-
-extraVolumes: []
-
 imagePullSecrets: []
 
-serviceAccount:
-  create: false
+containers:
+  # env:
+  # - name: INTAKE_PATH
+  #   value: ""
+  # - name: INTAKE_PORT
+  #   value: "5000"
+  volumeMounts: []
+
+serverEnvVars:
+  catalogPath:
+  - name: INTAKE_PATH
+  - value: ""
+  port:
+  - name: INTAKE_PORT
+  - value: "5000"
+
+extraVolumes: []
 
 podSecurityContext: {}
 
@@ -32,10 +37,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: ""
-
-ingress:
-  enabled: false
+  port: 5000
 
 resources: {}
 
