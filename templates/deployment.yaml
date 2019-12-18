@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "catalog-server.fullname" . }}
+  labels:
+    {{- include "catalog-server.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "catalog-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "catalog-server.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        {{- if .Values.extraVolumes }}
+        {{- .Values.extraVolumes | toYaml | trimSuffix "\n" | nindent 8 }}
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.containers.env }}
+          env:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+          {{- with .Values.containers.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.dnsPolicy }}
+      dnsPolicy:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.restartPolicy }}
+      restartPolicy:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.schedulerName }}
+      schedulerName:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
