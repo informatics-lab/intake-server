@@ -39,10 +39,10 @@ The table below shows configurable options for the Intake server helm chart:
 | --------------------------------------------- | ------------------------------------------------| --------------------------------------------------------|
 | `global.imagePullSecrets`                     | Global Docker registry secret names as an array | `[]`                                                    |
 | `containers.volumeMounts.value`               | Extra volume mounts to add to the server-running container | `[]`                                         |
-| `serverEnvVars.catalogPath.value`            | Path to the Intake catalog file to be served    | `""`                                                    |
-| `serverEnvVars.port`                          | Port the intake server runs on                  | 5000                                                    |
+| `extraEnv.catalogPath.value`                  | Path to the Intake catalog file to be served    | `""`                                                    |
+| `extraEnv.serverPort.value`                   | Port the intake server runs on                  | 5000                                                    |
 | `extraVolumes`                                | Definitions of extra volumes to be added to the server  | `[]`                                            |
-| `service.port`                                | Port for the k8s service to run on; must match `serverEnvVars.port.value` | 5000                          |
+| `service.port`                                | Service port; must match `extraEnv.ServerPort.value` | 5000                                               |
 | `resources`                                   | Hardware resource requests / limits             | `{}`                                                    |
 | `nodeSelector`                                | Node labels for pod assignment                  | `{}`                                                    |
 | `tolerations`                                 | Node tolerations for pod assignment             | `[]`                                                    |
