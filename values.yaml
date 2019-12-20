@@ -14,20 +14,15 @@ image:
 imagePullSecrets: []
 
 containers:
-  # env:
-  # - name: INTAKE_PATH
-  #   value: ""
-  # - name: INTAKE_PORT
-  #   value: "5000"
   volumeMounts: []
 
-serverEnvVars:
+extraEnv:
   catalogPath:
-  - name: INTAKE_PATH
-  - value: ""
-  port:
-  - name: INTAKE_PORT
-  - value: "5000"
+    name: INTAKE_PATH
+    value: ""
+  serverPort:
+    name: INTAKE_PORT
+    value: 5000
 
 extraVolumes: []
 

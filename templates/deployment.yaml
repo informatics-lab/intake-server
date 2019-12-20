@@ -22,13 +22,11 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.containers.env }}
           env:
-          - name: {{ .Values.serverEnvVars.catalogPath.name }}
-            value: {{ .Values.serverEnvVars.catalogPath.value }}
-          - name: {{ .Values.serverEnvVars.port.name }}
-            value: {{ .Values.serverEnvVars.port.value }}
-          {{- end }}
+          - name: {{ .Values.extraEnv.catalogPath.name }}
+            value: {{ .Values.extraEnv.catalogPath.value }}
+          - name: {{ .Values.extraEnv.serverPort.name }}
+            value: "{{ .Values.extraEnv.serverPort.value }}"
           {{- with .Values.containers.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 10 }}
